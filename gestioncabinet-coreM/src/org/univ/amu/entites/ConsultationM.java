@@ -33,7 +33,7 @@ public class ConsultationM implements Consultation {
 	@Override
 	public void setPatient(Patient patient) {
 		
-		this.patirthhent = patient;
+		this.patient = patient;
 	}
 
 	@Override

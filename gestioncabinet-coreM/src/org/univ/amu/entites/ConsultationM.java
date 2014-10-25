@@ -16,7 +16,7 @@ public class ConsultationM implements Consultation {
 	 * 
 	 */
 	private static final long serialVersionUID = -278148284796775331L;
-	
+	private Patient patient;
 
 	@Override
 	public int compareTo(Consultation arg0) {

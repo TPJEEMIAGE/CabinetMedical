@@ -12,29 +12,7 @@ public class UtilisateurM extends PersonneM implements Utilisateur {
 	private String compte;
 	private String motdepasse;
 	
-	@Override
-	public String getNom() {
-		
-		return super.getNom();
-	}
-
-	@Override
-	public void setNom(String nom) {
-		super.setNom(nom);
-		
-	}
-
-	@Override
-	public String getPrenom() {
-		
-		return super.getPrenom();
-	}
-
-	@Override
-	public void setPrenom(String prenom) {
-		super.setPrenom(prenom);
-		
-	}
+	
 
 	@Override
 	public String getCompte() {

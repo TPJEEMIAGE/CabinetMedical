@@ -3,6 +3,8 @@ package org.univ.amu;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.ejb.Stateful;
+
 import miage.gestioncabinet.api.Consultation;
 import miage.gestioncabinet.api.GestionCabinetException;
 import miage.gestioncabinet.api.Medecin;
@@ -10,6 +12,7 @@ import miage.gestioncabinet.api.Patient;
 import miage.gestioncabinet.api.PlanningRemoteService;
 import miage.gestioncabinet.api.Utilisateur;
 
+@Stateful
 public class PlanningService implements PlanningRemoteService{
 
 	@Override

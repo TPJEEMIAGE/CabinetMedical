@@ -15,7 +15,6 @@ import org.jboss.logging.Logger;
 
 
 @Singleton
-@Startup
 public class ApplicationService {
 
 	@Resource(name="org.univ.amu.logger")

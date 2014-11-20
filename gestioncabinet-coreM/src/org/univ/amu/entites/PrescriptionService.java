@@ -1,4 +1,4 @@
-package org.univ.amu;
+package org.univ.amu.entites;
 
 public class PrescriptionService {
 

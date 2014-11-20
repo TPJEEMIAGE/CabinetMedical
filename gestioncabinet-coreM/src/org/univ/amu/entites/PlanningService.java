@@ -1,8 +1,9 @@
-package org.univ.amu;
+package org.univ.amu.entites;
 
 import java.util.Calendar;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
 
 import miage.gestioncabinet.api.Consultation;

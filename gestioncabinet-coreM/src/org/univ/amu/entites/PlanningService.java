@@ -75,25 +75,26 @@ public class PlanningService implements PlanningRemoteService{
 
 	@Override
 	public Calendar getDateDebut() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return dateDebut;
 	}
 
 	@Override
 	public void setDateDebut(Calendar date) {
-		// TODO Auto-generated method stub
+		this.dateDebut = date;
 		
 	}
 
 	@Override
 	public Calendar getDateFin() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return dateFin;
 	}
 
 	@Override
 	public void setDateFin(Calendar date) {
-		// TODO Auto-generated method stub
+		
+		this.dateFin = date;
 		
 	}
 

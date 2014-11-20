@@ -13,7 +13,6 @@ import javax.ejb.Startup;
 
 import org.jboss.logging.Logger;
 
-@Startup
 @Singleton
 public class ApplicationService {
 

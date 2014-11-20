@@ -13,14 +13,14 @@ import javax.ejb.Startup;
 
 import org.jboss.logging.Logger;
 
-
+@Startup
 @Singleton
 public class ApplicationService {
 
 	@Resource(name="org.univ.amu.logger")
 	private Logger log;
 	
-	private Properties props;
+	private Properties props = new Properties();
 	
 	public String getProperty(String key){
 		return props.getProperty(key);
@@ -33,8 +33,10 @@ public class ApplicationService {
 	@PostConstruct
 	public void initialisation() throws IOException{
 		String path = this.getClass().getResource("").toString();
+		path = path.replaceAll("vfs:", "");
+		path = path.replaceAll("org/univ/amu/", "META-INF/application.properties");
 		File f = new File(path);
-	
+		// vfs:/C:/JBoss/standalone/deployments/gestioncabinet.ear/gestioncabinet-util.jar/
 	
 		if(f.exists()){
 			InputStream p = new FileInputStream(f);

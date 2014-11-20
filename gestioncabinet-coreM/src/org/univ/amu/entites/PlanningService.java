@@ -43,21 +43,32 @@ public class PlanningService implements PlanningRemoteService{
 	 
 	@Override
 	public Utilisateur getUtilisateur() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return user;
 	}
 
 	@Override
 	public List<Medecin> rechercherMedecins() throws GestionCabinetException {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public List<Patient> rechercherPatients(String nom, String prenom,
 			Calendar dateNaissance) throws GestionCabinetException {
-		// TODO Auto-generated method stub
-		return null;
+		List<Patient> listP = new ArrayList<Patient>();
+		for(Patient p: lstPatient){
+			
+			if(nom == null || p.getNom().contains(nom)  
+				&& prenom==null || p.getPrenom().contains(prenom) 
+				&& dateNaissance.equals(null) || p.getDateNaissance().equals(dateNaissance))
+			{
+				listP.add(p);
+			}
+		}
+		
+		
+		return listP;
 	}
 
 	@Override
@@ -87,19 +98,18 @@ public class PlanningService implements PlanningRemoteService{
 	@Override
 	public Medecin getMedecin() {
 		
-		return null;
+		return doc;
 	}
 
 	@Override
 	public void setMedecin(Medecin medecin) {
-		// TODO Auto-generated method stub
-		
+		this.doc=medecin;
 	}
 
 	@Override
 	public List<Consultation> listerRdv() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return lstConsultation;
 	}
 
 	@Override

@@ -15,6 +15,13 @@ import miage.gestioncabinet.api.Utilisateur;
 @Stateful
 public class PlanningService implements PlanningRemoteService{
 
+	private List<Consultation> lstConsultation;
+	
+	@PostConstruct
+	private void init(){
+		
+	}
+
 	@Override
 	public Utilisateur getUtilisateur() {
 		// TODO Auto-generated method stub
@@ -60,7 +67,7 @@ public class PlanningService implements PlanningRemoteService{
 
 	@Override
 	public Medecin getMedecin() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

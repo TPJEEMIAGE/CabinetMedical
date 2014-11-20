@@ -1,5 +1,6 @@
 package org.univ.amu.entites;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -19,12 +20,27 @@ import miage.gestioncabinet.api.Utilisateur;
 public class PlanningService implements PlanningRemoteService{
 
 	private List<Consultation> lstConsultation;
+	private Medecin doc;
+	private Utilisateur user;
+	private List<Patient> lstPatient;
 	
 	@PostConstruct
 	private void init(){
 		
+	  user = new UtilisateurM();
+	  user.setNom("Bak");
+	  user.setPrenom("BakBak");
+	  
+	  doc= new MedecinM();
+	  doc.setNom("Bik");
+	  doc.setPrenom("BikBik");
+	
+	  this.lstConsultation= new ArrayList<Consultation>();
+	  this.lstPatient = new ArrayList<Patient>();
+	  
 	}
-
+	  
+	 
 	@Override
 	public Utilisateur getUtilisateur() {
 		// TODO Auto-generated method stub

@@ -1,6 +1,7 @@
 package org.univ.amu.entites;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import miage.gestioncabinet.api.Consultation;
@@ -17,6 +18,12 @@ public class ConsultationM implements Consultation {
 	 */
 	private static final long serialVersionUID = -278148284796775331L;
 	private Patient patient;
+	private Medecin medecin;
+	private Long id;
+	private Calendar dateRdv;
+	private Date heureDebut;
+	private String compteRendu;
+	
 
 	@Override
 	public int compareTo(Consultation arg0) {
@@ -27,7 +34,7 @@ public class ConsultationM implements Consultation {
 	@Override
 	public Patient getPatient() {
 		
-		return null;
+		return patient;
 	}
 
 	@Override
@@ -39,25 +46,25 @@ public class ConsultationM implements Consultation {
 	@Override
 	public Medecin getMedecin() {
 		
-		return null;
+		return medecin;
 	}
 
 	@Override
 	public void setMedecin(Medecin medecin) {
 		
-		
+		this.medecin = medecin;
 	}
 
 	@Override
 	public Calendar getDebut() {
 		
-		return null;
+		return dateRdv;
 	}
 
 	@Override
 	public void setDebut(Calendar date) {
 		
-		
+		this.dateRdv = date;
 	}
 
 	@Override

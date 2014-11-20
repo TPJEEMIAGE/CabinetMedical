@@ -1,5 +1,6 @@
 package org.univ.amu.entites;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -21,8 +22,11 @@ public class ConsultationM implements Consultation {
 	private Medecin medecin;
 	private Long id;
 	private Calendar dateRdv;
-	private Date heureDebut;
+	private Calendar heureDebut;
+	private Calendar heurefin;
 	private String compteRendu;
+	private List<Traitement> traitement;
+	private List<Interaction> interaction;
 	
 
 	@Override
@@ -58,66 +62,78 @@ public class ConsultationM implements Consultation {
 	@Override
 	public Calendar getDebut() {
 		
-		return dateRdv;
+		return heureDebut;
 	}
 
 	@Override
 	public void setDebut(Calendar date) {
 		
-		this.dateRdv = date;
+		this.heureDebut = date;
 	}
 
 	@Override
 	public Calendar getFin() {
 		
-		return null;
+		return heurefin;
 	}
 
 	@Override
 	public void setFin(Calendar date) {
-		
-		
+		this.heurefin=date;		
 	}
 
 	@Override
 	public String getCompteRendu() {
 		
-		return null;
+		return compteRendu;
 	}
 
 	@Override
 	public void setCompteRendu(String texte) {
-		
+		this.compteRendu = texte;
 		
 	}
 
 	@Override
 	public List<Traitement> getPrescription() {
-		
-		return null;
+		if(this.traitement == null)
+			this.traitement = new ArrayList<Traitement>();
+		return traitement;
 	}
 
 	@Override
 	public Boolean ajouterTraitement(Produit produit) {
 		
-		return null;
+		try{
+			Traitement traitement2 = new TraitementM();
+			traitement2.setProduit(produit);			
+			this.getPrescription().add(traitement2);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	@Override
 	public Boolean supprimerTraitement(Traitement medicament) {
 		
-		return null;
+		
+		return traitement.remove(medicament);
 	}
 
 	@Override
 	public List<Interaction> getInteractions() {
-		
-		return null;
+		if(this.interaction == null)
+			this.interaction = new ArrayList<Interaction>();
+		return interaction;
 	}
 
 	@Override
 	public void setInteractions(List<Interaction> interactions) {
 		
+		this.interaction = interactions ;
 		
 	}
 

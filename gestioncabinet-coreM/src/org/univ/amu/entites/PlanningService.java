@@ -37,6 +37,11 @@ public class PlanningService implements PlanningRemoteService{
 	  doc= new MedecinM();
 	  doc.setNom("Bik");
 	  doc.setPrenom("BikBik");
+	  
+	  dateDebut = Calendar.getInstance();
+	  dateDebut.roll(Calendar.DAY_OF_MONTH,-5);
+	  dateFin =  Calendar.getInstance();
+	  dateFin.roll(Calendar.DAY_OF_MONTH,5);
 	
 	  this.lstConsultation= new ArrayList<Consultation>();
 	  this.lstPatient = new ArrayList<Patient>();

@@ -22,6 +22,12 @@ public class ConsultationM implements Consultation {
 	private Medecin medecin;
 	private Long id;
 	private Calendar dateRdv;
+	@Override
+	public String toString() {
+		return "ConsultationM [patient=" + patient + ", medecin=" + medecin
+				+ "]";
+	}
+
 	private Calendar heureDebut;
 	private Calendar heurefin;
 	private String compteRendu;
@@ -36,8 +42,46 @@ public class ConsultationM implements Consultation {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((dateRdv == null) ? 0 : dateRdv.hashCode());
+		result = prime * result + ((medecin == null) ? 0 : medecin.hashCode());
+		result = prime * result + ((patient == null) ? 0 : patient.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ConsultationM other = (ConsultationM) obj;
+		if (dateRdv == null) {
+			if (other.dateRdv != null)
+				return false;
+		} else if (!dateRdv.equals(other.dateRdv))
+			return false;
+		if (medecin == null) {
+			if (other.medecin != null)
+				return false;
+		} else if (!medecin.equals(other.medecin))
+			return false;
+		if (patient == null) {
+			if (other.patient != null)
+				return false;
+		} else if (!patient.equals(other.patient))
+			return false;
+		return true;
+	}
+
+	@Override
 	public Patient getPatient() {
-		
+		if(this.patient == null)
+			patient = new PatientM();
 		return patient;
 	}
 

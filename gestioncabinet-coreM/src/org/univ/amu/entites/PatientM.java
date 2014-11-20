@@ -19,6 +19,24 @@ public class PatientM extends PersonneM implements Patient{
 		
 		return dateNaissance;
 	}
+	
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof PatientM){
+			if(((PatientM)obj).getNom().equals(this.getNom()) && ((PatientM)obj).getPrenom().equals(this.getPrenom())){
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "PatientM [getNom()=" + getNom() + ", getPrenom()="
+				+ getPrenom() + "]";
+	}
 
 	@Override
 	public void setDateNaissance(Calendar dateNaissance) {

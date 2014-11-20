@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.Remote;
 import javax.ejb.Stateful;
 
 import miage.gestioncabinet.api.Consultation;
@@ -13,6 +14,7 @@ import miage.gestioncabinet.api.Patient;
 import miage.gestioncabinet.api.PlanningRemoteService;
 import miage.gestioncabinet.api.Utilisateur;
 
+@Remote(PlanningRemoteService.class)
 @Stateful
 public class PlanningService implements PlanningRemoteService{
 

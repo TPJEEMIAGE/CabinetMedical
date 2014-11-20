@@ -19,6 +19,7 @@ import miage.gestioncabinet.api.Utilisateur;
 @Stateful
 public class PlanningService implements PlanningRemoteService{
 
+	private Consultation rdvCourant;
 	private List<Consultation> lstConsultation;
 	private Medecin doc;
 	private Utilisateur user;
@@ -110,37 +111,41 @@ public class PlanningService implements PlanningRemoteService{
 
 	@Override
 	public List<Consultation> listerRdv() {
-		
 		return lstConsultation;
 	}
 
 	@Override
 	public Consultation getRdvCourant() {
-		// TODO Auto-generated method stub
-		return null;
+		return rdvCourant;
 	}
 
 	@Override
 	public void setRdvCourant(Consultation rdv) {
-		// TODO Auto-generated method stub
-		
+		rdvCourant = rdv;
 	}
 
 	@Override
 	public Consultation creerRdv(Calendar date) {
-		// TODO Auto-generated method stub
-		return null;
+		rdvCourant = new ConsultationM();
+		rdvCourant.setDebut(dateDebut);
+		rdvCourant.setFin(dateFin);
+		rdvCourant.setMedecin(this.getMedecin());
+		return rdvCourant;
 	}
 
 	@Override
 	public Consultation enregistrerRdv() throws GestionCabinetException {
-		// TODO Auto-generated method stub
-		return null;
+		this.setRdvCourant(rdvCourant);
+		lstConsultation.add(rdvCourant);
+		return rdvCourant;
 	}
 
 	@Override
 	public void supprimerRdv() throws GestionCabinetException {
-		// TODO Auto-generated method stub
+		if(lstConsultation.contains(rdvCourant))
+		{
+			lstConsultation.remove(rdvCourant);
+		}
 		
 	}
 

@@ -23,7 +23,9 @@ public class PlanningService implements PlanningRemoteService{
 	private Medecin doc;
 	private Utilisateur user;
 	private List<Patient> lstPatient;
-	
+	private Calendar dateDebut;
+	private Calendar dateFin;
+
 	@PostConstruct
 	private void init(){
 		

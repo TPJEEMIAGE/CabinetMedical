@@ -35,7 +35,6 @@ public class ApplicationService {
 		path = path.replaceAll("vfs:", "");
 		path = path.replaceAll("org/univ/amu/", "META-INF/application.properties");
 		File f = new File(path);
-		// vfs:/C:/JBoss/standalone/deployments/gestioncabinet.ear/gestioncabinet-util.jar/
 	
 		if(f.exists()){
 			InputStream p = new FileInputStream(f);

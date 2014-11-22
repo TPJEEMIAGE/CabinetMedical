@@ -15,15 +15,17 @@ import miage.gestioncabinet.api.Produit;
 @Stateful
 public class ConsultationService implements ConsultationRemoteService {
 
+	private Consultation consultation;
+	
 	@Override
 	public Consultation getConsultation() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return consultation;
 	}
 
 	@Override
 	public void setConsultation(Consultation consultation) {
-		// TODO Auto-generated method stub
+		this.consultation = consultation;
 		
 	}
 

@@ -5,8 +5,11 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
+
+import org.univ.amu.ApplicationService;
 
 import miage.gestioncabinet.api.Consultation;
 import miage.gestioncabinet.api.GestionCabinetException;
@@ -19,6 +22,9 @@ import miage.gestioncabinet.api.Utilisateur;
 @Stateful
 public class PlanningService implements PlanningRemoteService{
 
+	@EJB
+	private ApplicationService appli;
+	
 	private Consultation rdvCourant;
 	private List<Consultation> lstConsultation;
 	private Medecin doc;
@@ -88,6 +94,7 @@ public class PlanningService implements PlanningRemoteService{
 	@Override
 	public void setDateDebut(Calendar date) {
 		this.dateDebut = date;
+		
 		
 	}
 

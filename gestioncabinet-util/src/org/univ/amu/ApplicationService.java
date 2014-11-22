@@ -16,6 +16,8 @@ import org.jboss.logging.Logger;
 @Singleton
 public class ApplicationService {
 
+	private static final String CONFIG_PATH = "/META-INF/application.properties";
+	
 	@Resource(name="org.univ.amu.logger")
 	private Logger log;
 	
@@ -33,7 +35,7 @@ public class ApplicationService {
 	public void initialisation() throws IOException{
 		String path = this.getClass().getResource("").toString();
 		path = path.replaceAll("vfs:", "");
-		path = path.replaceAll("org/univ/amu/", "META-INF/application.properties");
+		path = path.replaceAll("/org/univ/amu/", ApplicationService.CONFIG_PATH);
 		File f = new File(path);
 	
 		if(f.exists()){

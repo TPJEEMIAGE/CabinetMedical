@@ -3,8 +3,11 @@ package org.univ.amu.entites;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
+
+import org.univ.amu.PrescriptionService;
 
 import miage.gestioncabinet.api.Consultation;
 import miage.gestioncabinet.api.ConsultationRemoteService;
@@ -15,6 +18,9 @@ import miage.gestioncabinet.api.Produit;
 @Stateful
 public class ConsultationService implements ConsultationRemoteService {
 
+	@EJB
+	private PrescriptionService pService;
+	
 	private Consultation consultation;
 	
 	@Override
@@ -38,8 +44,7 @@ public class ConsultationService implements ConsultationRemoteService {
 	@Override
 	public List<Produit> rechercherMedicament(String keyword)
 			throws GestionCabinetException {
-		// TODO Auto-generated method stub
-		return null;
+		return pService.findProduits(keyword);
 	}
 
 	@Override

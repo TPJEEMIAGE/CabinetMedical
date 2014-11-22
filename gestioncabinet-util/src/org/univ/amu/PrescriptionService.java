@@ -21,10 +21,8 @@ public class PrescriptionService {
 	@EJB
 	private ApplicationService appService;
 	
-	@EJB
 	private ProductService prodService;
 	
-	@EJB
 	private InteractionService interactionService;
 	
 	public List<Produit> findProduits(String keyword){

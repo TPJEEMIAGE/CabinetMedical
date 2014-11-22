@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import miage.gestioncabinet.api.Consultation;
+import miage.gestioncabinet.api.ConsultationRemoteService;
 import miage.gestioncabinet.api.Medecin;
 import miage.gestioncabinet.api.PlanningRemoteService;
 
@@ -28,6 +29,8 @@ public class PlanningTestClient {
 	 * L'interface distante de l'EJB
 	 */
 	private PlanningRemoteService ejb;
+	
+	private ConsultationRemoteService ejb2;
 
 	/**
 	 * Constructeur avec lookup pour récupérer le proxy de l'EJB
@@ -35,9 +38,12 @@ public class PlanningTestClient {
 	 */
 	public PlanningTestClient() {
 		String service = "ejb:gestioncabinet/gestioncabinet-coreM//PlanningService!miage.gestioncabinet.api.PlanningRemoteService?stateful";
+		String service2 = "ejb:gestioncabinet/gestioncabinet-coreM//ConsultationService!miage.gestioncabinet.api.ConsultationRemoteService?stateful";
+		
 		try{
 			ServiceLocator locator = ServiceLocator.INSTANCE;
 			this.ejb = (PlanningRemoteService) locator.getRemoteInterface(service);
+			this.ejb2 = (ConsultationRemoteService) locator.getRemoteInterface(service2);
 		}
 		catch(ServiceLocatorException e){
 			System.out.println("Le service "+service+" est introuvable");

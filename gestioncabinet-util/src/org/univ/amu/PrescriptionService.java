@@ -11,6 +11,7 @@ import fr.vidal.webservices.interactionservice.InteractionService;
 import fr.vidal.webservices.productservice.ArrayOfInt;
 import fr.vidal.webservices.productservice.Product;
 import fr.vidal.webservices.productservice.ProductService;
+import fr.vidal.webservices.productservice.ProductService_Service;
 import miage.gestioncabinet.api.Interaction;
 import miage.gestioncabinet.api.Produit;
 
@@ -26,6 +27,9 @@ public class PrescriptionService {
 	private InteractionService interactionService;
 	
 	public List<Produit> findProduits(String keyword){
+		if(prodService == null){
+			prodService = new ProductService_Service().getProductServiceHttpPort();
+		}
 		List<Produit> lstRetour = new ArrayList<Produit>();
 		try{
 			List<Product> lstProduct = prodService.directSearchByName(keyword).getProduct();
@@ -44,22 +48,7 @@ public class PrescriptionService {
 	}
 	
 	public List<Interaction> findInteractions(List<Produit> produits){
-		/*List<Interaction> lstRetour = new ArrayList<Interaction>();
-		try{
-			ArrayOfInt productIds = ArrayOfInt.class.newInstance();
-			for(Produit p : produits){
-			}
-			
-			
-			for(Product p : lstInteraction){
-				Produit prod = (Produit) Class.forName(appService.getProperty("interactionClass")).newInstance();
-			}
-			return lstRetour;
-		}
-		catch(Exception e){
-			appService.getLogger().error("Erreur lors de la recherche de produit avec le mot clé : "+keyword,e);
-			return new ArrayList<Interaction>();
-		}*/
+		
 		return null;
 	}
 	

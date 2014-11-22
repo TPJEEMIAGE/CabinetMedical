@@ -7,6 +7,7 @@ import java.util.List;
 
 import miage.gestioncabinet.api.Consultation;
 import miage.gestioncabinet.api.ConsultationRemoteService;
+import miage.gestioncabinet.api.GestionCabinetException;
 import miage.gestioncabinet.api.Medecin;
 import miage.gestioncabinet.api.PlanningRemoteService;
 
@@ -55,11 +56,16 @@ public class PlanningTestClient {
 	public static void main(String[] args) {
 		PlanningTestClient app = new PlanningTestClient();
 		System.out.println("On développe un scénario de test du planning de consultation");
+		try {
+			app.ejb2.rechercherMedicament("asp");
+		} catch (GestionCabinetException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		try{
 			Medecin medecin = app.ejb.getMedecin();
 			System.out.println("Sélection du médecin courant : "+medecin);
-			
 	
 			DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
 			System.out.println("Planning du jour : du "+df.format(app.ejb.getDateDebut().getTime())+" au "+df.format(app.ejb.getDateFin().getTime()));

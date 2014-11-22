@@ -8,6 +8,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import fr.vidal.webservices.interactionservice.InteractionService;
+import fr.vidal.webservices.interactionservice.InteractionService_Service;
 import fr.vidal.webservices.productservice.ArrayOfInt;
 import fr.vidal.webservices.productservice.Product;
 import fr.vidal.webservices.productservice.ProductService;
@@ -27,9 +28,7 @@ public class PrescriptionService {
 	private InteractionService interactionService;
 	
 	public List<Produit> findProduits(String keyword){
-		if(prodService == null){
-			prodService = new ProductService_Service().getProductServiceHttpPort();
-		}
+		prodService = new ProductService_Service().getProductServiceHttpPort();
 		List<Produit> lstRetour = new ArrayList<Produit>();
 		try{
 			List<Product> lstProduct = prodService.directSearchByName(keyword).getProduct();
@@ -48,6 +47,16 @@ public class PrescriptionService {
 	}
 	
 	public List<Interaction> findInteractions(List<Produit> produits){
+		interactionService = new InteractionService_Service().getInteractionServiceHttpPort();
+		List<Product> lstProduct = new ArrayList<Product>();
+		try{
+		
+		for (Produit p : produits){
+			lstProduct.add(prodService.searchByCis(p.getCis()));			
+		}
+		List<ArrayOf>
+		interactionService.
+		
 		
 		return null;
 	}

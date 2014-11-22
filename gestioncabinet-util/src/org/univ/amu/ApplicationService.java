@@ -14,6 +14,7 @@ import javax.ejb.Startup;
 import org.jboss.logging.Logger;
 
 @Singleton
+@Startup
 public class ApplicationService {
 
 	private static final String CONFIG_PATH = "/META-INF/application.properties";
@@ -32,7 +33,7 @@ public class ApplicationService {
 	}
 	
 	@PostConstruct
-	public void initialisation() throws IOException{
+	private void initialisation() throws IOException{
 		String path = this.getClass().getResource("").toString();
 		path = path.replaceAll("vfs:", "");
 		path = path.replaceAll("/org/univ/amu/", ApplicationService.CONFIG_PATH);

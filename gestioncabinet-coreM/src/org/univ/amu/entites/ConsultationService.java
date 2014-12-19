@@ -54,11 +54,13 @@ public class ConsultationService implements ConsultationRemoteService {
 	}
 
 	@Override
-	public Consultation enregistrer() throws GestionCabinetException {
-		// Ajouter traitement
-		//set interaction
+	public Consultation enregistrer(List<Produit> produit, List<Interaction> interaction) throws GestionCabinetException {
+		for (Produit p : produit){
+			this.consultation.ajouterTraitement(p);
+		}
+		this.consultation.setInteractions(interaction);
 		
-		return null;
+		return consultation;
 	}
 
 	@Override

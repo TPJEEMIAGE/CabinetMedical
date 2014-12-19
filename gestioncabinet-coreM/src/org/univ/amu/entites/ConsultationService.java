@@ -12,6 +12,7 @@ import org.univ.amu.PrescriptionService;
 import miage.gestioncabinet.api.Consultation;
 import miage.gestioncabinet.api.ConsultationRemoteService;
 import miage.gestioncabinet.api.GestionCabinetException;
+import miage.gestioncabinet.api.Interaction;
 import miage.gestioncabinet.api.Produit;
 
 @Remote(ConsultationRemoteService.class)
@@ -48,14 +49,15 @@ public class ConsultationService implements ConsultationRemoteService {
 	}
 
 	@Override
-	public void analyserPrescription() throws GestionCabinetException {
-		// TODO Auto-generated method stub
-		
+	public List<Interaction> analyserPrescription(List<Produit> produits) throws GestionCabinetException {
+		return pService.findInteractions(produits);		
 	}
 
 	@Override
 	public Consultation enregistrer() throws GestionCabinetException {
-		// TODO Auto-generated method stub
+		// Ajouter traitement
+		//set interaction
+		
 		return null;
 	}
 

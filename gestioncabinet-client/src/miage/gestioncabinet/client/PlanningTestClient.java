@@ -5,11 +5,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
+import org.univ.amu.entites.ConsultationM;
+
 import miage.gestioncabinet.api.Consultation;
 import miage.gestioncabinet.api.ConsultationRemoteService;
 import miage.gestioncabinet.api.GestionCabinetException;
+import miage.gestioncabinet.api.Interaction;
 import miage.gestioncabinet.api.Medecin;
 import miage.gestioncabinet.api.PlanningRemoteService;
+import miage.gestioncabinet.api.Produit;
 
 import com.novarem.jndi.ServiceLocator;
 import com.novarem.jndi.ServiceLocatorException;
@@ -55,9 +59,16 @@ public class PlanningTestClient {
 
 	public static void main(String[] args) {
 		PlanningTestClient app = new PlanningTestClient();
+		
 		System.out.println("On développe un scénario de test du planning de consultation");
 		try {
-			app.ejb2.rechercherMedicament("asp");
+		List<Produit> prod = app.ejb2.rechercherMedicament("asp");
+		List<Interaction> inter = prod = app.ejb2.analyserPrescription(prod);
+		Consultation consultation = new ConsultationM();
+		for (Produit p : prod){
+			consultation.ajouterTraitement(p);
+		}
+		consultation.setInteractions(inter);
 		} catch (GestionCabinetException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

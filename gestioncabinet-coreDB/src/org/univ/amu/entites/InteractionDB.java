@@ -36,11 +36,11 @@ public class InteractionDB implements Interaction {
 	@Column(name="c_precautions")
 	private String precautions;
 	
-	@ManyToOne
+	@ManyToOne(targetEntity=ProduitDB.class)
 	@JoinColumn(name="c_produit_a")
 	private Produit produitA;
 	
-	@ManyToOne
+	@ManyToOne(targetEntity=ProduitDB.class)
 	@JoinColumn(name="c_produit_b")
 	private Produit produitB;
 	

@@ -30,7 +30,7 @@ public class TraitementDB implements Traitement {
 	@Column(name="c_posologie")
 	private String posologie;
 	
-	@ManyToOne
+	@ManyToOne(targetEntity=ProduitDB.class)
 	@JoinColumn(name="c_produit")
 	private Produit produit;
 

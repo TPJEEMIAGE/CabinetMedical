@@ -31,11 +31,11 @@ public class ConsultationDB implements Consultation {
 	 */
 	private static final long serialVersionUID = -278148284796775331L;
 	
-	@ManyToOne
+	@ManyToOne(targetEntity=PatientDB.class)
 	@JoinColumn(name="c_patient")
 	private Patient patient;
 	
-	@ManyToOne
+	@ManyToOne(targetEntity=MedecinDB.class)
 	@JoinColumn(name="c_medecin")
 	private Medecin medecin;
 	
@@ -58,11 +58,11 @@ public class ConsultationDB implements Consultation {
 	@Column(name="c_compterendu")
 	private String compteRendu;
 	
-	@OneToMany
+	@OneToMany(targetEntity=ConsultationDB.class)
 	@JoinColumn(name="c_consultation")
 	private List<Traitement> traitement;
 	
-	@OneToMany
+	@OneToMany(targetEntity=ConsultationDB.class)
 	@JoinColumn(name="c_consultation")
 	private List<Interaction> interaction;
 	

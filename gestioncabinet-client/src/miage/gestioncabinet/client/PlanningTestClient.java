@@ -63,8 +63,8 @@ public class PlanningTestClient {
 		System.out.println("On développe un scénario de test du planning de consultation");
 		try {
 		List<Produit> prod = app.ejb2.rechercherMedicament("asp");
-		List<Interaction> inter = prod = app.ejb2.analyserPrescription(prod);
-		Consultation consultation = app.ejb2.enregistrer(prod,inter);
+		app.ejb2.analyserPrescription();
+		Consultation consultation = app.ejb2.enregistrer();
 		
 		} catch (GestionCabinetException e1) {
 			// TODO Auto-generated catch block

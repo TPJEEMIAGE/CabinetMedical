@@ -1,5 +1,6 @@
 package org.univ.amu.entites;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import miage.gestioncabinet.api.ConsultationRemoteService;
 import miage.gestioncabinet.api.GestionCabinetException;
 import miage.gestioncabinet.api.Interaction;
 import miage.gestioncabinet.api.Produit;
+import miage.gestioncabinet.api.Traitement;
 
 @Remote(ConsultationRemoteService.class)
 @Stateful
@@ -21,6 +23,9 @@ public class ConsultationService implements ConsultationRemoteService {
 
 	@EJB
 	private PrescriptionService pService;
+	
+	@EJB
+	private PlanningService planningService;
 	
 	private Consultation consultation;
 	
@@ -48,25 +53,34 @@ public class ConsultationService implements ConsultationRemoteService {
 		return pService.findProduits(keyword);
 	}
 
-	@Override
-	public List<Interaction> analyserPrescription(List<Produit> produits) throws GestionCabinetException {
-		return pService.findInteractions(produits);		
-	}
 
+	
 	@Override
-	public Consultation enregistrer(List<Produit> produit, List<Interaction> interaction) throws GestionCabinetException {
-		for (Produit p : produit){
-			this.consultation.ajouterTraitement(p);
+	public Consultation enregistrer() throws GestionCabinetException {
+		if(planningService.getLstConsultation().contains(consultation)){
+			planningService.getLstConsultation().remove(consultation);
 		}
-		this.consultation.setInteractions(interaction);
+		planningService.getLstConsultation().add(consultation);
 		
 		return consultation;
 	}
 
 	@Override
 	public void supprimer() throws GestionCabinetException {
-		// TODO Auto-generated method stub
+		if(planningService.getLstConsultation().contains(consultation)){
+			planningService.getLstConsultation().remove(consultation);
+		}
 		
 	}
+
+	@Override
+	public void analyserPrescription() throws GestionCabinetException {
+		List<Produit> lstProd = new ArrayList<Produit>();
+		for(Traitement t : consultation.getPrescription()){
+			lstProd.add(t.getProduit());
+		}
+		consultation.setInteractions(pService.findInteractions(lstProd));
+	}
+
 
 }

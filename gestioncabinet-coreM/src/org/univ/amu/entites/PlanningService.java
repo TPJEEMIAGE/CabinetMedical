@@ -162,4 +162,14 @@ public class PlanningService implements PlanningRemoteService{
 		
 	}
 
+
+	public List<Consultation> getLstConsultation() {
+		return lstConsultation;
+	}
+
+
+	public void setLstConsultation(List<Consultation> lstConsultation) {
+		this.lstConsultation = lstConsultation;
+	}
+
 }

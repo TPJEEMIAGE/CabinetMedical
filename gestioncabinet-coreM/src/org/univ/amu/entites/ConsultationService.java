@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.ejb.LocalBean;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
 
@@ -18,6 +19,7 @@ import miage.gestioncabinet.api.Produit;
 import miage.gestioncabinet.api.Traitement;
 
 @Remote(ConsultationRemoteService.class)
+@LocalBean
 @Stateful
 public class ConsultationService implements ConsultationRemoteService {
 

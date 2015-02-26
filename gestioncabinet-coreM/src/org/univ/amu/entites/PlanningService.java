@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.LocalBean;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
 
@@ -19,6 +20,7 @@ import miage.gestioncabinet.api.PlanningRemoteService;
 import miage.gestioncabinet.api.Utilisateur;
 
 @Remote(PlanningRemoteService.class)
+@LocalBean
 @Stateful
 public class PlanningService implements PlanningRemoteService{
 

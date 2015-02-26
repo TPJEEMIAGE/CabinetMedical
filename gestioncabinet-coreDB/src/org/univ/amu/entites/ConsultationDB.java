@@ -7,8 +7,12 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -41,6 +45,7 @@ public class ConsultationDB implements Consultation {
 	
 	@Id
 	@Column(name="c_id")
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
 	@Column(name="c_daterdv")
@@ -48,18 +53,20 @@ public class ConsultationDB implements Consultation {
 	private Calendar dateRdv;
 
 	@Column(name="c_hdebut")
-	@Temporal(TemporalType.TIME)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar heureDebut;
 	
 	@Column(name="c_hfin")
-	@Temporal(TemporalType.TIME)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar heurefin;
 	
 	@Column(name="c_compterendu")
 	private String compteRendu;
 	
-	@OneToMany(targetEntity=ConsultationDB.class)
-	@JoinColumn(name="c_consultation")
+	@ManyToMany(targetEntity=TraitementDB.class)
+	@JoinTable(name="t_consultation_interaction",
+		joinColumns=@JoinColumn(name="c_idconsultation"),
+		inverseJoinColumns=@JoinColumn(name="c_idtraitement"))
 	private List<Traitement> traitement;
 	
 	@OneToMany(targetEntity=ConsultationDB.class)

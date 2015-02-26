@@ -23,7 +23,7 @@ public class PatientDB extends PersonneDB implements Patient{
 	private String sexe;
 	
 	@Column(name="c_datenaiss")
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dateNaissance;
 	
 	@Override

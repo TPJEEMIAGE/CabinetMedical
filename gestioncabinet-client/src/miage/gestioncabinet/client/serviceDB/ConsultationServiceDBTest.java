@@ -4,17 +4,14 @@
 package miage.gestioncabinet.client.serviceDB;
 
 import java.util.Calendar;
-import java.util.List;
-
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 import miage.gestioncabinet.api.Consultation;
 import miage.gestioncabinet.api.ConsultationRemoteService;
 import miage.gestioncabinet.api.GestionCabinetException;
-import miage.gestioncabinet.api.PlanningRemoteService;
-import miage.gestioncabinet.api.Produit;
+
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import com.novarem.jndi.ServiceLocator;
 import com.novarem.jndi.ServiceLocatorException;
@@ -73,7 +70,6 @@ public class ConsultationServiceDBTest {
 	}
 
 	public void supprimer() {
-		// TODO Auto-generated method stub
 		
 	}
 	

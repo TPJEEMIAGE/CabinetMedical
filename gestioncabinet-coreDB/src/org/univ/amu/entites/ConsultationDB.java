@@ -2,7 +2,6 @@ package org.univ.amu.entites;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -45,7 +44,7 @@ public class ConsultationDB implements Consultation {
 	
 	@Id
 	@Column(name="c_id")
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(name="c_daterdv")
@@ -100,7 +99,7 @@ public class ConsultationDB implements Consultation {
 
 	@Override
 	public String toString() {
-		return "ConsultationM [patient=" + patient + ", medecin=" + medecin
+		return this.getClass().getSimpleName() + " [patient=" + patient + ", medecin=" + medecin
 				+ "]";
 	}
 	

@@ -76,8 +76,16 @@ public class ConsultationDB implements Consultation {
 
 	@Override
 	public int compareTo(Consultation arg0) {
-		
-		return 0;
+		int compare = 0;
+		if(this.getDebut() != null){
+			compare = this.getDebut().compareTo(arg0.getDebut());
+			if(compare == 0){
+				if(this.getFin() != null){
+					compare = this.getFin().compareTo(arg0.getFin());
+				}
+			}
+		}
+		return compare;
 	}
 
 	@Override

@@ -69,7 +69,7 @@ public class ConsultationDB implements Consultation {
 		inverseJoinColumns=@JoinColumn(name="c_idtraitement"))
 	private List<Traitement> traitement;
 	
-	@OneToMany(targetEntity=ConsultationDB.class)
+	@OneToMany(targetEntity=InteractionDB.class)
 	@JoinColumn(name="c_consultation")
 	private List<Interaction> interaction;
 	

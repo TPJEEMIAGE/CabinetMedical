@@ -3,10 +3,13 @@ package org.univ.amu.entites;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import miage.gestioncabinet.api.Utilisateur;
 
 @Entity
+@Table (name="t_personne")
 @DiscriminatorValue("simpleUser")
 public class UtilisateurDB extends PersonneDB implements Utilisateur {
 

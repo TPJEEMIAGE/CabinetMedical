@@ -5,12 +5,14 @@ import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import miage.gestioncabinet.api.Patient;
 
 @Entity
+@Table (name="t_personne") 
 @DiscriminatorValue("patient")
 public class PatientDB extends PersonneDB implements Patient{
 

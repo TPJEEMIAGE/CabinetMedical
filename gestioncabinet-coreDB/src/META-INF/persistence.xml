@@ -2,6 +2,14 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="TPBDD" transaction-type="JTA">
 		<jta-data-source>java:jboss/datasources/TPBDD</jta-data-source>
+		<class>org.univ.amu.entites.ConsultationDB</class>
+		<class>org.univ.amu.entites.InteractionDB</class>
+		<class>org.univ.amu.entites.MedecinDB</class>
+		<class>org.univ.amu.entites.PatientDB</class>
+		<class>org.univ.amu.entites.PersonneDB</class>
+		<class>org.univ.amu.entites.ProduitDB</class>
+		<class>org.univ.amu.entites.TraitementDB</class>
+		<class>org.univ.amu.entites.UtilisateurDB</class>
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />

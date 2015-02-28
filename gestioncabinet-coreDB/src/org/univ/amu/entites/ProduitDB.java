@@ -3,8 +3,6 @@ package org.univ.amu.entites;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import miage.gestioncabinet.api.Produit;
@@ -15,9 +13,6 @@ import miage.gestioncabinet.api.Produit;
 
 @Entity
 @Table(name="t_produit")
-@NamedQueries({
-	@NamedQuery(name=ProduitDB.RECHERCHER_MEDICAMENT, query="select p from ProduitDB p where p.nom = :keyword")
-})
 public class ProduitDB implements Produit {
 	 
 	/**
@@ -33,6 +28,9 @@ public class ProduitDB implements Produit {
 	
 	@Column(name="c_nom")
 	private String nom;
+	
+	@Column(name="c_vidal_id")
+	private Integer vidal_id;
 
 	@Override
 	public String getCis() {		
@@ -53,6 +51,20 @@ public class ProduitDB implements Produit {
 	public void setNom(String nom) {
 		this.nom=nom;
 		
+	}
+
+	/**
+	 * @return the vidal_id
+	 */
+	public Integer getVidal_id() {
+		return vidal_id;
+	}
+
+	/**
+	 * @param vidal_id the vidal_id to set
+	 */
+	public void setVidal_id(Integer vidal_id) {
+		this.vidal_id = vidal_id;
 	} 
 
 }

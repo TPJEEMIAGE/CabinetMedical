@@ -14,7 +14,7 @@ import miage.gestioncabinet.api.Produit;
 @Entity
 @Table(name="t_produit")
 public class ProduitDB implements Produit {
-	
+	 
 	/**
 	 * 
 	 */
@@ -46,6 +46,6 @@ public class ProduitDB implements Produit {
 	public void setNom(String nom) {
 		this.nom=nom;
 		
-	}
+	} 
 
 }

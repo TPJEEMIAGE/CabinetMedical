@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 
 import miage.gestioncabinet.api.Personne;
@@ -18,7 +19,7 @@ import miage.gestioncabinet.api.Personne;
  * @author cregis
  *
  */
-@Entity
+@MappedSuperclass
 @Table(name="t_personne")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="c_discriminator",discriminatorType=DiscriminatorType.STRING)
@@ -36,7 +37,7 @@ public abstract class PersonneDB implements Personne {
 	
 	@Column(name="c_nom")
 	private String nom;
-	
+	 
 	@Column(name="c_prenom")
 	private String prenom;
 	

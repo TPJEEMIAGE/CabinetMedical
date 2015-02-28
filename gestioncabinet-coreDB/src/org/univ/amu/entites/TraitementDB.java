@@ -72,7 +72,7 @@ public class TraitementDB implements Traitement {
 	 * @param id the id to set
 	 */
 	public void setId(Long id) {
-		this.id = id;
+		this.id = id; 
 	}
 
 }

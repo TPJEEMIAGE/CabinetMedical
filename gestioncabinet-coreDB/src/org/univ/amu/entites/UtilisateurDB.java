@@ -22,7 +22,7 @@ public class UtilisateurDB extends PersonneDB implements Utilisateur {
 	private String motdepasse;
 	
 	
-
+ 
 	@Override
 	public String getCompte() {
 		

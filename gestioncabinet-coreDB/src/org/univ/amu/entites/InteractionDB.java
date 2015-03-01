@@ -1,6 +1,9 @@
 package org.univ.amu.entites;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,24 +42,30 @@ public class InteractionDB implements Interaction {
 	@Column(name="c_precautions")
 	private String precautions;
 	
-	@ManyToOne(targetEntity=ProduitDB.class)
-	@JoinColumn(name="c_produit_a")
-	private Produit produitA;
+	@Embedded
+	@AttributeOverrides({
+		@AttributeOverride(name="cis",column=@Column(name="c_cis_a")),
+		@AttributeOverride(name="nom",column=@Column(name="c_nom_a")),
+	})
+	private ProduitDB produitA;
 	
-	@ManyToOne(targetEntity=ProduitDB.class)
-	@JoinColumn(name="c_produit_b")
-	private Produit produitB;
+	@Embedded
+	@AttributeOverrides({
+		@AttributeOverride(name="cis",column=@Column(name="c_cis_b")),
+		@AttributeOverride(name="nom",column=@Column(name="c_nom_b")),
+	})
+	private ProduitDB produitB;
 	
 
 	@Override
-	public Produit getProduitA() {
+	public ProduitDB getProduitA() {
 		
 		return produitA;
 	}
 
 	@Override
 	public void setProduitA(Produit produit) {
-		this.produitA=produit;
+		this.produitA=(ProduitDB) produit;
 		
 	}
 
@@ -68,7 +77,7 @@ public class InteractionDB implements Interaction {
 
 	@Override
 	public void setProduitB(Produit produit) {
-		this.produitB=produit;
+		this.produitB=(ProduitDB) produit;
 		
 	}
 

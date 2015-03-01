@@ -5,15 +5,23 @@ package org.univ.amu.entites;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.xml.ws.WebServiceClient;
+
+import org.univ.amu.PrescriptionService;
 
 import miage.gestioncabinet.api.Consultation;
 import miage.gestioncabinet.api.ConsultationRemoteService;
@@ -29,23 +37,22 @@ import fr.vidal.webservices.interactionservice.InteractionSeverityType;
 import fr.vidal.webservices.productservice.ArrayOfProduct;
 import fr.vidal.webservices.productservice.Product;
 import fr.vidal.webservices.productservice.ProductService;
+import fr.vidal.webservices.productservice.ProductService_Service;
 
 /**
  * @author Moe1
  *
  */
-@Stateful
+@Singleton
+@Startup
 @Remote(ConsultationRemoteService.class)
 public class ConsultationServiceDB implements ConsultationRemoteService {
 
 	@PersistenceContext(unitName = "TPBDD")
 	private EntityManager entityManager;
-
+	
 	@EJB
-	private ProductService productService;
-
-	@EJB
-	private InteractionService interactionService;
+	private PrescriptionService prescriptionService;
 
 	private Consultation consultation;
 
@@ -81,26 +88,7 @@ public class ConsultationServiceDB implements ConsultationRemoteService {
 	public List<Produit> rechercherMedicament(String keyword)
 			throws GestionCabinetException {
 		List<Produit> produits = null;
-		try{
-			ArrayOfProduct productsVidal = this.productService.directSearchByName(keyword);
-			produits = new ArrayList<Produit>(productsVidal.getProduct().size());
-			for(Product productVidal : productsVidal.getProduct()){
-				Produit produit = null;
-				try{
-					produit = this.entityManager.find(ProduitDB.class, productVidal.getCis());
-				}catch(NoResultException e){
-					produit = new ProduitDB();
-					produit.setCis(productVidal.getCis());
-					produit.setNom(productVidal.getName());
-					((ProduitDB)produit).setVidal_id(productVidal.getId());
-					this.entityManager.persist(produit);
-				}
-				produits.add(produit);
-			}
-		}catch(Exception e){
-			System.err.println(this + "n'a pas pu trouver les médicaments correspondant à " + keyword);
-			e.printStackTrace();
-		}
+		produits = prescriptionService.findProduits(keyword);
 		return produits;
 	}
 
@@ -110,7 +98,11 @@ public class ConsultationServiceDB implements ConsultationRemoteService {
 		ArrayOfInt ints = new ArrayOfInt();
 		try{
 			this.getConsultation().getInteractions().clear();
+			Set<Produit> prodSet = new HashSet<Produit>();
 			for(Traitement traitement : this.getConsultation().getPrescription()){
+				prodSet.add(traitement.getProduit());
+			}
+			/**for(Traitement traitement : this.getConsultation().getPrescription()){
 				Produit produit = traitement.getProduit();
 				if(produit instanceof ProduitDB){
 					ProduitDB produitDB = (ProduitDB) produit;
@@ -135,7 +127,8 @@ public class ConsultationServiceDB implements ConsultationRemoteService {
 				interaction.setProduitB(produitB);
 				interaction.setSeverite(vidalInteraction.getSeverity().value());
 				this.getConsultation().getInteractions().add(interaction);
-			}
+			}**/
+			List<Interaction> interactions = prescriptionService.findInteractions(new ArrayList<Produit>(prodSet));
 			this.entityManager.persist(this.getConsultation());
 		}catch(Exception e){
 			System.err.println(this + " n'a pas réussi à analyser " + this.getConsultation());
@@ -166,5 +159,8 @@ public class ConsultationServiceDB implements ConsultationRemoteService {
 
 
 	}
+
+	
+	
 
 }

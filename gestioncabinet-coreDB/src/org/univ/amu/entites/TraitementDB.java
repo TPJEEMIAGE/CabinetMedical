@@ -1,6 +1,7 @@
 package org.univ.amu.entites;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,9 +34,8 @@ public class TraitementDB implements Traitement {
 	@Column(name="c_posologie")
 	private String posologie;
 	
-	@ManyToOne(targetEntity=ProduitDB.class)
-	@JoinColumn(name="c_produit")
-	private Produit produit;
+	@Embedded
+	private ProduitDB produit;
 
 	@Override
 	public Produit getProduit() {
@@ -45,7 +45,7 @@ public class TraitementDB implements Traitement {
 
 	@Override
 	public void setProduit(Produit produit) {
-		this.produit=produit;
+		this.produit=(ProduitDB) produit;
 		
 	}
 

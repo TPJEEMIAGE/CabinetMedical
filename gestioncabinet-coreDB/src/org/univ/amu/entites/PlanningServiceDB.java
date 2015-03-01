@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.ejb.LocalBean;
+import javax.ejb.Remote;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -23,12 +25,15 @@ import miage.gestioncabinet.api.Utilisateur;
  * @author Moe1
  *
  */
+@Remote(PlanningRemoteService.class)
+@LocalBean
 public class PlanningServiceDB implements PlanningRemoteService {
 	private Utilisateur utilisateur;
 	private Calendar debut;
 	private Calendar fin;
 	private Medecin medecin;
 	private Consultation rdvCourant;
+	
 	@EJB
 	private ConsultationRemoteService consultationService;
 	

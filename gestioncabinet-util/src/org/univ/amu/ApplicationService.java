@@ -32,7 +32,7 @@ public class ApplicationService {
 		return log;
 	}
 	
-	//@PostConstruct
+	@PostConstruct
 	private void initialisation() throws IOException{
 		String path = this.getClass().getResource("").toString();
 		path = path.replaceAll("vfs:", "");

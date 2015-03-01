@@ -7,7 +7,6 @@
 		<class>org.univ.amu.entites.MedecinDB</class>
 		<class>org.univ.amu.entites.PatientDB</class>
 		<class>org.univ.amu.entites.PersonneDB</class>
-		<class>org.univ.amu.entites.ProduitDB</class>
 		<class>org.univ.amu.entites.TraitementDB</class>
 		<class>org.univ.amu.entites.UtilisateurDB</class>
 		<properties>

@@ -4,10 +4,12 @@
 package miage.gestioncabinet.client.serviceDB;
 
 import java.util.Calendar;
+import java.util.List;
 
 import miage.gestioncabinet.api.Consultation;
 import miage.gestioncabinet.api.ConsultationRemoteService;
 import miage.gestioncabinet.api.GestionCabinetException;
+import miage.gestioncabinet.api.Produit;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -42,7 +44,7 @@ public class ConsultationServiceDBTest {
 		}
 	}
 
-	@Test
+	
 	public void creerRdv() {
 		try{
 			Calendar date = Calendar.getInstance();
@@ -55,10 +57,14 @@ public class ConsultationServiceDBTest {
 		
 	}
 
-	
-	public void rechercherMedicament(String keyword)
+	@Test
+	public void rechercherMedicament()
 			throws GestionCabinetException {
-		//TODO Not implemented yet
+		final String KEYWORD = "doliprane";
+		List<Produit> produits = ConsultationServiceDBTest.ejb.rechercherMedicament(KEYWORD);
+		for(Produit produit : produits){
+			Assert.assertTrue(produit.getNom().contains(KEYWORD));
+		}
 	}
 
 	public void analyserPrescription() {

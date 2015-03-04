@@ -7,8 +7,8 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import org.univ.amu.entites.InteractionDB;
-import org.univ.amu.entites.ProduitDB;
+//import org.univ.amu.entites.InteractionDB;
+//import org.univ.amu.entites.ProduitDB;
 
 import fr.vidal.webservices.interactionservice.ArrayOfProduct;
 import fr.vidal.webservices.interactionservice.InteractionCouple;
@@ -34,29 +34,19 @@ public class PrescriptionService {
 	
 	private InteractionService interactionService;
 	
-	public List<Produit> findProduits(String keyword){
+	public List<Product> findProduits(String keyword){
 		prodService = new ProductService_Service().getProductServiceHttpPort();
-		List<Produit> lstRetour = new ArrayList<Produit>();
 		try{
-			List<Product> lstProduct = prodService.directSearchByName(keyword).getProduct();
-			for(Product p : lstProduct){
-				Produit prod = (Produit) new ProduitDB();//Class.forName(appService.getProperty("productClass")).newInstance();
-				if(p.getCis() != null)
-					prod.setCis(p.getCis());
-				else
-					prod.setCis(String.valueOf(p.getId()));
-				prod.setNom(p.getName());
-				lstRetour.add(prod);
-			}
-			return lstRetour;
+			return prodService.directSearchByName(keyword).getProduct();
 		}
 		catch(Exception e){
 			appService.getLogger().error("Erreur lors de la recherche de produit avec le mot clé : "+keyword,e);
-			return new ArrayList<Produit>();
+			return new ArrayList<Product>();
 		}
 	}
 	
 	public List<Interaction> findInteractions(List<Produit> produits){
+		
 		interactionService = new InteractionService_Service().getInteractionServiceHttpPort(); // On recupère le service web interaction vidal
 		
 		List<Product> lstProduct = new ArrayList<Product>();
@@ -97,10 +87,10 @@ public class PrescriptionService {
 				for(InteractionCouple ic : ir.getInteractionCoupleList().getInteractionCouple())
 				{
 					//On instancie nos objets interactions et produits (Ceux qui seront stockées dans l'interaction)
-					Interaction inter = (Interaction) new InteractionDB();//Class.forName(appService.getProperty("interactionClass")).newInstance();
-					Produit prodA = (Produit) new ProduitDB();//Class.forName(appService.getProperty("productClass")).newInstance();
-					Produit prodB = (Produit) new ProduitDB();//Class.forName(appService.getProperty("productClass")).newInstance();
-					
+					Interaction inter;// = (Interaction) new InteractionDB();//Class.forName(appService.getProperty("interactionClass")).newInstance();
+					Produit prodA; //= (Produit) new ProduitDB();//Class.forName(appService.getProperty("productClass")).newInstance();
+					Produit prodB;// = (Produit) new ProduitDB();//Class.forName(appService.getProperty("productClass")).newInstance();
+					/*
 					//On renseigne les produits avec les données des product dans l'interactionCouple
 					prodA.setCis(ic.getProductA().getCis());
 					prodB.setCis(ic.getProductB().getCis());
@@ -115,7 +105,7 @@ public class PrescriptionService {
 					inter.setSeverite(ic.getSeverity().value());
 					
 					//On l'ajoute a la liste de retour
-					lstReturn.add(inter);
+					lstReturn.add(inter);*/
 				}
 			}
 			

@@ -11,8 +11,8 @@ import miage.gestioncabinet.api.Produit;
 /**
  *  @author regisc
  */
-
-@Embeddable
+@Entity
+@Table(name="t_produit")
 public class ProduitDB implements Produit {
 	 
 	/**
@@ -22,11 +22,23 @@ public class ProduitDB implements Produit {
 	
 	public static final String RECHERCHER_MEDICAMENT = "rechercher_medicament";
 	
+	@Id
 	@Column(name="c_cis")
 	private String cis;
 	
 	@Column(name="c_nom")
 	private String nom;
+	
+	@Column(name="c_vidal_id")
+	private Integer vidalId;
+
+	public Integer getVidalId() {
+		return vidalId;
+	}
+
+	public void setVidalId(Integer vidalId) {
+		this.vidalId = vidalId;
+	}
 
 	@Override
 	public String getCis() {		

@@ -34,7 +34,9 @@ public class TraitementDB implements Traitement {
 	@Column(name="c_posologie")
 	private String posologie;
 	
-	@Embedded
+	@ManyToOne
+	@JoinColumn(name="c_produit")
+	
 	private ProduitDB produit;
 
 	@Override

@@ -9,14 +9,13 @@ import javax.ejb.LocalBean;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
 
-import org.univ.amu.PrescriptionService;
-
 import miage.gestioncabinet.api.Consultation;
 import miage.gestioncabinet.api.ConsultationRemoteService;
 import miage.gestioncabinet.api.GestionCabinetException;
-import miage.gestioncabinet.api.Interaction;
 import miage.gestioncabinet.api.Produit;
 import miage.gestioncabinet.api.Traitement;
+
+import org.univ.amu.PrescriptionService;
 
 @Remote(ConsultationRemoteService.class)
 @LocalBean
@@ -45,14 +44,19 @@ public class ConsultationService implements ConsultationRemoteService {
 
 	@Override
 	public Consultation creerRdv(Calendar date) {
-		// TODO Auto-generated method stub
-		return null;
+		Consultation consultation = new ConsultationM();
+		Calendar fin = (Calendar)date.clone();
+		fin.add(Calendar.MINUTE, 30);
+		consultation.setDebut(date);
+		consultation.setFin(fin);
+		return consultation;
 	}
 
+	//TODO Faire la méthode
 	@Override
 	public List<Produit> rechercherMedicament(String keyword)
 			throws GestionCabinetException {
-		return pService.findProduits(keyword);
+		return null;
 	}
 
 

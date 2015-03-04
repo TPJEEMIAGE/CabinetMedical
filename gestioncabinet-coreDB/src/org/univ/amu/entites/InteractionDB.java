@@ -42,18 +42,10 @@ public class InteractionDB implements Interaction {
 	@Column(name="c_precautions")
 	private String precautions;
 	
-	@Embedded
-	@AttributeOverrides({
-		@AttributeOverride(name="cis",column=@Column(name="c_cis_a")),
-		@AttributeOverride(name="nom",column=@Column(name="c_nom_a")),
-	})
+	@Column(name="c_produit_a")
 	private ProduitDB produitA;
 	
-	@Embedded
-	@AttributeOverrides({
-		@AttributeOverride(name="cis",column=@Column(name="c_cis_b")),
-		@AttributeOverride(name="nom",column=@Column(name="c_nom_b")),
-	})
+	@Column(name="c_produit_b")
 	private ProduitDB produitB;
 	
 

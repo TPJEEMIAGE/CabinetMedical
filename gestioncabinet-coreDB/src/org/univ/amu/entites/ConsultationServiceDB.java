@@ -13,15 +13,10 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
-import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.xml.ws.WebServiceClient;
-
-import org.univ.amu.PrescriptionService;
 
 import miage.gestioncabinet.api.Consultation;
 import miage.gestioncabinet.api.ConsultationRemoteService;
@@ -29,21 +24,22 @@ import miage.gestioncabinet.api.GestionCabinetException;
 import miage.gestioncabinet.api.Interaction;
 import miage.gestioncabinet.api.Produit;
 import miage.gestioncabinet.api.Traitement;
+
+import org.univ.amu.PrescriptionService;
+
 import fr.vidal.webservices.interactionservice.ArrayOfInt;
 import fr.vidal.webservices.interactionservice.InteractionCouple;
 import fr.vidal.webservices.interactionservice.InteractionResult;
 import fr.vidal.webservices.interactionservice.InteractionService;
+import fr.vidal.webservices.interactionservice.InteractionService_Service;
 import fr.vidal.webservices.interactionservice.InteractionSeverityType;
-import fr.vidal.webservices.productservice.ArrayOfProduct;
 import fr.vidal.webservices.productservice.Product;
-import fr.vidal.webservices.productservice.ProductService;
-import fr.vidal.webservices.productservice.ProductService_Service;
 
 /**
  * @author Moe1
  *
  */
-@Singleton
+@Stateful
 @Startup
 @Remote(ConsultationRemoteService.class)
 public class ConsultationServiceDB implements ConsultationRemoteService {
@@ -53,8 +49,16 @@ public class ConsultationServiceDB implements ConsultationRemoteService {
 	
 	@EJB
 	private PrescriptionService prescriptionService;
+	
+	private static InteractionService interactionService;
 
 	private Consultation consultation;
+	
+	@PostConstruct
+	public void initialization(){
+		if(ConsultationServiceDB.interactionService == null)
+			ConsultationServiceDB.interactionService = new InteractionService_Service().getInteractionServiceHttpPort();
+	}
 
 	@Override
 	public Consultation getConsultation() {
@@ -87,8 +91,16 @@ public class ConsultationServiceDB implements ConsultationRemoteService {
 	@Override
 	public List<Produit> rechercherMedicament(String keyword)
 			throws GestionCabinetException {
-		List<Produit> produits = null;
-		produits = prescriptionService.findProduits(keyword);
+		List<Produit> produits = new ArrayList<Produit>();
+		for(Product p : prescriptionService.findProduits(keyword)){
+			Produit prod = (Produit) new ProduitDB();//Class.forName(appService.getProperty("productClass")).newInstance();
+			if(p.getCis() != null)
+				prod.setCis(p.getCis());
+			else
+				prod.setCis(String.valueOf(p.getId()));
+			prod.setNom(p.getName());
+			produits.add(prod);
+		}
 		return produits;
 	}
 
@@ -102,14 +114,14 @@ public class ConsultationServiceDB implements ConsultationRemoteService {
 			for(Traitement traitement : this.getConsultation().getPrescription()){
 				prodSet.add(traitement.getProduit());
 			}
-			/**for(Traitement traitement : this.getConsultation().getPrescription()){
+			for(Traitement traitement : this.getConsultation().getPrescription()){
 				Produit produit = traitement.getProduit();
 				if(produit instanceof ProduitDB){
 					ProduitDB produitDB = (ProduitDB) produit;
-					ints.getInt().add(produitDB.getVidal_id());
+					ints.getInt().add(produitDB.getVidalId());
 				}
 			}
-			InteractionResult vidalInteractions = this.interactionService.getInteractionCouplesForProductIds(ints, InteractionSeverityType.CONTRAINDICATIONS);
+			InteractionResult vidalInteractions = ConsultationServiceDB.interactionService.getInteractionCouplesForProductIds(ints, InteractionSeverityType.CONTRAINDICATIONS);
 			for(InteractionCouple vidalInteraction : vidalInteractions.getInteractionCoupleList().getInteractionCouple()){
 				Interaction interaction = new InteractionDB();
 				Produit produitA = null;
@@ -127,8 +139,7 @@ public class ConsultationServiceDB implements ConsultationRemoteService {
 				interaction.setProduitB(produitB);
 				interaction.setSeverite(vidalInteraction.getSeverity().value());
 				this.getConsultation().getInteractions().add(interaction);
-			}**/
-			List<Interaction> interactions = prescriptionService.findInteractions(new ArrayList<Produit>(prodSet));
+			}
 			this.entityManager.persist(this.getConsultation());
 		}catch(Exception e){
 			System.err.println(this + " n'a pas réussi à analyser " + this.getConsultation());

@@ -11,6 +11,8 @@ import javax.annotation.Resource;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
+import miage.gestioncabinet.api.Produit;
+
 import org.jboss.logging.Logger;
 
 @Singleton
@@ -34,6 +36,7 @@ public class ApplicationService {
 	
 	@PostConstruct
 	private void initialisation() throws IOException{
+		log = Logger.getLogger("org.univ.amu.logger");
 		String path = this.getClass().getResource("").toString();
 		path = path.replaceAll("vfs:", "");
 		path = path.replaceAll("/org/univ/amu/", ApplicationService.CONFIG_PATH);

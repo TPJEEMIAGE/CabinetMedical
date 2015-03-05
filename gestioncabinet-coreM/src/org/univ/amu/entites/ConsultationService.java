@@ -14,7 +14,6 @@ import org.univ.amu.PrescriptionService;
 import miage.gestioncabinet.api.Consultation;
 import miage.gestioncabinet.api.ConsultationRemoteService;
 import miage.gestioncabinet.api.GestionCabinetException;
-import miage.gestioncabinet.api.Interaction;
 import miage.gestioncabinet.api.Produit;
 import miage.gestioncabinet.api.Traitement;
 
@@ -24,7 +23,7 @@ import miage.gestioncabinet.api.Traitement;
 public class ConsultationService implements ConsultationRemoteService {
 
 	@EJB
-	private PrescriptionService pService;
+	private PrescriptionServiceM pService;
 	
 	@EJB
 	private PlanningService planningService;
@@ -45,8 +44,8 @@ public class ConsultationService implements ConsultationRemoteService {
 
 	@Override
 	public Consultation creerRdv(Calendar date) {
-		// TODO Auto-generated method stub
-		return null;
+		consultation = planningService.creerRdv(date);
+		return consultation;
 	}
 
 	@Override

@@ -6,21 +6,15 @@ package org.univ.amu.entites;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.xml.ws.WebServiceClient;
-
 import org.univ.amu.PrescriptionService;
 
 import miage.gestioncabinet.api.Consultation;
@@ -30,14 +24,6 @@ import miage.gestioncabinet.api.Interaction;
 import miage.gestioncabinet.api.Produit;
 import miage.gestioncabinet.api.Traitement;
 import fr.vidal.webservices.interactionservice.ArrayOfInt;
-import fr.vidal.webservices.interactionservice.InteractionCouple;
-import fr.vidal.webservices.interactionservice.InteractionResult;
-import fr.vidal.webservices.interactionservice.InteractionService;
-import fr.vidal.webservices.interactionservice.InteractionSeverityType;
-import fr.vidal.webservices.productservice.ArrayOfProduct;
-import fr.vidal.webservices.productservice.Product;
-import fr.vidal.webservices.productservice.ProductService;
-import fr.vidal.webservices.productservice.ProductService_Service;
 
 /**
  * @author Moe1

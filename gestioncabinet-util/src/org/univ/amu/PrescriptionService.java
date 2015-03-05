@@ -7,10 +7,7 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import org.univ.amu.entites.InteractionDB;
-import org.univ.amu.entites.ProduitDB;
 
-import fr.vidal.webservices.interactionservice.ArrayOfProduct;
 import fr.vidal.webservices.interactionservice.InteractionCouple;
 import fr.vidal.webservices.interactionservice.InteractionResult;
 import fr.vidal.webservices.interactionservice.InteractionService;
@@ -23,12 +20,7 @@ import fr.vidal.webservices.productservice.ProductService_Service;
 import miage.gestioncabinet.api.Interaction;
 import miage.gestioncabinet.api.Produit;
 
-@Stateless
-@LocalBean
-public class PrescriptionService {
-
-	@EJB
-	private ApplicationService appService;
+public abstract class PrescriptionService {
 	
 	private ProductService prodService;
 	
@@ -40,7 +32,7 @@ public class PrescriptionService {
 		try{
 			List<Product> lstProduct = prodService.directSearchByName(keyword).getProduct();
 			for(Product p : lstProduct){
-				Produit prod = (Produit) new ProduitDB();//Class.forName(appService.getProperty("productClass")).newInstance();
+				Produit prod = getProduitInstance(); 
 				if(p.getCis() != null)
 					prod.setCis(p.getCis());
 				else
@@ -51,7 +43,7 @@ public class PrescriptionService {
 			return lstRetour;
 		}
 		catch(Exception e){
-			appService.getLogger().error("Erreur lors de la recherche de produit avec le mot clé : "+keyword,e);
+			getApplicationService().getLogger().error("Erreur lors de la recherche de produit avec le mot clé : "+keyword,e);
 			return new ArrayList<Produit>();
 		}
 	}
@@ -85,8 +77,11 @@ public class PrescriptionService {
 			//La méthode getInteractionCouplesForProductIds prend en paramètre un ArrayOfInt que l'on a, et un InteractionseverityType
 			//La méthode ne spécifie pas quel type utiliser donc on boucle sur les valeurs de l'enumeration InteractionseverityType
 			//Pour toutes les récuperer
-			for(InteractionSeverityType type : InteractionSeverityType.values())
+			for(InteractionSeverityType type : InteractionSeverityType.values()){
 				intResult.add(interactionService.getInteractionCouplesForProductIds(intArray,type));
+				//intResult.add(interactionService.getInteractionCouplesForOneProductId(intArray.getInt().get(2), intArray, type));
+			}
+			
 			
 			//On prepare la liste d'interaction que l'on retourne
 			List<Interaction> lstReturn = new ArrayList<Interaction>();
@@ -97,9 +92,9 @@ public class PrescriptionService {
 				for(InteractionCouple ic : ir.getInteractionCoupleList().getInteractionCouple())
 				{
 					//On instancie nos objets interactions et produits (Ceux qui seront stockées dans l'interaction)
-					Interaction inter = (Interaction) new InteractionDB();//Class.forName(appService.getProperty("interactionClass")).newInstance();
-					Produit prodA = (Produit) new ProduitDB();//Class.forName(appService.getProperty("productClass")).newInstance();
-					Produit prodB = (Produit) new ProduitDB();//Class.forName(appService.getProperty("productClass")).newInstance();
+					Interaction inter = getInteractionInstance();
+					Produit prodA = getProduitInstance();
+					Produit prodB = getProduitInstance();
 					
 					//On renseigne les produits avec les données des product dans l'interactionCouple
 					prodA.setCis(ic.getProductA().getCis());
@@ -123,7 +118,7 @@ public class PrescriptionService {
 		}
 		catch(Exception e){
 			//Si il y a un problème, on logge l'erreur et on renvoie un liste vide
-			this.appService.getLogger().error("Une erreur est survenue lors de la recherche d'interactions pour la liste de produits : "+produits,e);
+			this.getApplicationService().getLogger().error("Une erreur est survenue lors de la recherche d'interactions pour la liste de produits : "+produits,e);
 			return new ArrayList<Interaction>();
 		}
 		
@@ -132,5 +127,11 @@ public class PrescriptionService {
 		
 	
 	}
+	
+	public abstract ApplicationService getApplicationService();
+	
+	public abstract Produit getProduitInstance();
+	
+	public abstract Interaction getInteractionInstance();
 }
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure>
+	<sub-deployment name="gestioncabinet-coreM.jar">
+	</sub-deployment>
+	<sub-deployment name="gestioncabinet-util.jar">
+		<dependencies>
+			<module name="deployment.gestioncabinet.ear.gestioncabinet-coreM.jar"/>
+		</dependencies>
+	</sub-deployment>
+</jboss-deployment-structure>

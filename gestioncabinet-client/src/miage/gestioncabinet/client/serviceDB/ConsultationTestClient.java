@@ -22,8 +22,8 @@ public class ConsultationTestClient {
 	private ConsultationRemoteService ejb2;
 	
 	public ConsultationTestClient() {
-		String service = "ejb:gestioncabinet/gestioncabinet-coreM//PlanningService!miage.gestioncabinet.api.PlanningRemoteService?stateful";
-		String service2 = "ejb:gestioncabinet/gestioncabinet-coreM//ConsultationService!miage.gestioncabinet.api.ConsultationRemoteService?stateful";
+		String service = "ejb:gestioncabinetDB/gestioncabinet-coreDB//PlanningServiceDB!miage.gestioncabinet.api.PlanningRemoteService?stateful";
+		String service2 = "ejb:gestioncabinetDB/gestioncabinet-coreDB//ConsultationServiceDB!miage.gestioncabinet.api.ConsultationRemoteService?stateful";
 		
 		try{
 			ServiceLocator locator = ServiceLocator.INSTANCE;

@@ -10,5 +10,10 @@
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/gestioncabinet-coreM"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/gestioncabinet-coreDB"/>
+	<classpathentry kind="lib" path="D:/JBoss/JBoss7.1/modules/org/javassist/main/javassist-3.15.0-GA.jar"/>
+	<classpathentry kind="lib" path="D:/JBoss/JBoss7.1/modules/org/hibernate/main/hibernate-commons-annotations-4.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="D:/JBoss/JBoss7.1/modules/org/hibernate/main/hibernate-core-4.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="D:/JBoss/JBoss7.1/modules/org/hibernate/main/hibernate-entitymanager-4.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="D:/JBoss/JBoss7.1/modules/org/hibernate/main/hibernate-infinispan-4.0.1.Final.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

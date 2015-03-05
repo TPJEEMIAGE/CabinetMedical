@@ -84,14 +84,18 @@ public class ConsultationServiceDB implements ConsultationRemoteService {
 	//TODO A implémenter avec le Interaction Service
 	@Override
 	public void analyserPrescription() throws GestionCabinetException {
-		ArrayOfInt ints = new ArrayOfInt();
 		try{
+			enregistrer();
 			this.getConsultation().getInteractions().clear();
 			Set<Produit> prodSet = new HashSet<Produit>();
 			for(Traitement traitement : this.getConsultation().getPrescription())
 				prodSet.add(traitement.getProduit());
 			List<Interaction> interactions = prescriptionService.findInteractions(new ArrayList<Produit>(prodSet));
-			this.entityManager.persist(this.getConsultation());
+			for(Interaction i : interactions){
+				entityManager.persist(i);
+			}
+			this.consultation.setInteractions(interactions);
+			enregistrer();
 		}catch(Exception e){
 			System.err.println(this + " n'a pas réussi à analyser " + this.getConsultation());
 			e.printStackTrace();
@@ -101,10 +105,14 @@ public class ConsultationServiceDB implements ConsultationRemoteService {
 	@Override
 	public Consultation enregistrer() throws GestionCabinetException {
 		try{
+			if(((ConsultationDB)consultation).getDateRdv() == null)
+				((ConsultationDB)consultation).setDateRdv(Calendar.getInstance());;
 			if(((ConsultationDB)consultation).getId() == null)
 				this.entityManager.persist(this.getConsultation());
 			else
 				consultation = this.entityManager.merge(this.consultation);
+			consultation.getInteractions().size();
+			consultation.getPrescription().size();
 		}catch(Exception e){
 			e.printStackTrace();
 			System.err.println(this + " n'a pas réussi à enregistrer " + this.getConsultation());
@@ -116,6 +124,7 @@ public class ConsultationServiceDB implements ConsultationRemoteService {
 	@Override
 	public void supprimer() throws GestionCabinetException {
 		try{
+			enregistrer();
 			this.entityManager.remove(this.getConsultation());
 		}catch(Exception e){
 			e.printStackTrace();

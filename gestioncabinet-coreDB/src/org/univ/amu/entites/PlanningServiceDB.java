@@ -129,9 +129,12 @@ public class PlanningServiceDB implements PlanningRemoteService {
 	@Override
 	public List<Consultation> listerRdv() {
 		Query query = entityManager.createNamedQuery(ConsultationDB.RECHERCHER_CONSULTATIONS);
-		query.setParameter(1, debut);
-		query.setParameter(2, fin);
+		query.setParameter(1, Calendar.getInstance());
 		List<Consultation> lst = query.getResultList();
+		for(Consultation cons : lst){
+			cons.getPrescription().size();
+			cons.getInteractions().size();
+		}
 		return lst;
 	}
 

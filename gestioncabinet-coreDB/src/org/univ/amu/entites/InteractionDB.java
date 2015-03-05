@@ -29,7 +29,7 @@ public class InteractionDB implements Interaction {
 	
 	@Id
 	@Column(name="c_id")
-	@SequenceGenerator(name="idInteractionGenerator",sequenceName="t_interaction_c_id_seq",initialValue=1)
+	@SequenceGenerator(name="idInteractionGenerator",sequenceName="t_interaction_c_id_seq",initialValue=1,allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="idInteractionGenerator")
 	private Long id;
 	

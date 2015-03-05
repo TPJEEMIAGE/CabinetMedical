@@ -27,7 +27,7 @@ public class TraitementDB implements Traitement {
 	
 	@Id
 	@Column(name="c_id")
-	@SequenceGenerator(name="idTraitementGenerator",sequenceName="t_traitement_c_id_seq",initialValue=1)
+	@SequenceGenerator(name="idTraitementGenerator",sequenceName="t_traitement_c_id_seq",initialValue=1,allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="idTraitementGenerator")
 	private Long id;
 	

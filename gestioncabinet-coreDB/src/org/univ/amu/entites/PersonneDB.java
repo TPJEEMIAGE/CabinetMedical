@@ -33,7 +33,7 @@ public abstract class PersonneDB implements Personne {
 	
 	@Column(name="c_id")
 	@Id
-	@SequenceGenerator(name="idPersonneGenerator",sequenceName="t_personne_c_id_seq",initialValue=1)
+	@SequenceGenerator(name="idPersonneGenerator",sequenceName="t_personne_c_id_seq",initialValue=1,allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="idPersonneGenerator")
 	private Long id;
 	

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +31,7 @@ import miage.gestioncabinet.api.Traitement;
 
 @Entity
 @Table(name="t_consultation")
-@NamedQuery(name=ConsultationDB.RECHERCHER_CONSULTATIONS,query="select c From ConsultationDB c where c.dateRdv > ?1 and c.dateRdv < ?2")
+@NamedQuery(name=ConsultationDB.RECHERCHER_CONSULTATIONS,query="select c From ConsultationDB c where c.dateRdv = ?1")
 public class ConsultationDB implements Consultation {
 
 	/**
@@ -50,7 +51,7 @@ public class ConsultationDB implements Consultation {
 	
 	@Id
 	@Column(name="c_id")
-	@SequenceGenerator(name="idConsultationGenerator",sequenceName="t_consultation_c_id_seq",initialValue=1)
+	@SequenceGenerator(name="idConsultationGenerator",sequenceName="t_consultation_c_id_seq",initialValue=1,allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="idConsultationGenerator")
 	private Long id;
 	
@@ -244,6 +245,14 @@ public class ConsultationDB implements Consultation {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Calendar getDateRdv() {
+		return dateRdv;
+	}
+
+	public void setDateRdv(Calendar dateRdv) {
+		this.dateRdv = dateRdv;
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,6 +30,7 @@ import miage.gestioncabinet.api.Traitement;
 
 @Entity
 @Table(name="t_consultation")
+@NamedQuery(name=ConsultationDB.RECHERCHER_CONSULTATIONS,query="select c From ConsultationDB c where c.dateRdv > ?1 and c.dateRdv < ?2")
 public class ConsultationDB implements Consultation {
 
 	/**
@@ -34,17 +38,20 @@ public class ConsultationDB implements Consultation {
 	 */
 	private static final long serialVersionUID = -278148284796775331L;
 	
-	@ManyToOne(targetEntity=PatientDB.class)
+	public static final String RECHERCHER_CONSULTATIONS = "rechConsult";
+	
+	@ManyToOne(targetEntity=PatientDB.class,cascade={CascadeType.MERGE})
 	@JoinColumn(name="c_patient")
 	private Patient patient;
 	
-	@ManyToOne(targetEntity=MedecinDB.class)
+	@ManyToOne(targetEntity=MedecinDB.class,cascade={CascadeType.MERGE})
 	@JoinColumn(name="c_medecin")
 	private Medecin medecin;
 	
 	@Id
 	@Column(name="c_id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@SequenceGenerator(name="idConsultationGenerator",sequenceName="t_consultation_c_id_seq",initialValue=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="idConsultationGenerator")
 	private Long id;
 	
 	@Column(name="c_daterdv")
@@ -62,13 +69,11 @@ public class ConsultationDB implements Consultation {
 	@Column(name="c_compterendu")
 	private String compteRendu;
 	
-	@ManyToMany(targetEntity=TraitementDB.class)
-	@JoinTable(name="t_consultation_interaction",
-		joinColumns=@JoinColumn(name="c_idconsultation"),
-		inverseJoinColumns=@JoinColumn(name="c_idtraitement"))
+	@OneToMany(targetEntity=TraitementDB.class,cascade={CascadeType.ALL})
+	@JoinColumn(name="c_consultation")
 	private List<Traitement> traitement;
 	
-	@OneToMany(targetEntity=InteractionDB.class)
+	@OneToMany(targetEntity=InteractionDB.class,cascade={CascadeType.ALL})
 	@JoinColumn(name="c_consultation")
 	private List<Interaction> interaction;
 	
@@ -231,6 +236,14 @@ public class ConsultationDB implements Consultation {
 		
 		this.interaction = interactions ;
 		
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

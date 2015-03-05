@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Remote;
+import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -27,6 +28,7 @@ import miage.gestioncabinet.api.Utilisateur;
  */
 @Remote(PlanningRemoteService.class)
 @LocalBean
+@Stateful
 public class PlanningServiceDB implements PlanningRemoteService {
 	private Utilisateur utilisateur;
 	private Calendar debut;
@@ -82,6 +84,8 @@ public class PlanningServiceDB implements PlanningRemoteService {
 
 	@Override
 	public Calendar getDateDebut() {
+		if(debut == null)
+			debut = Calendar.getInstance();
 		return this.debut;
 	}
 
@@ -93,6 +97,10 @@ public class PlanningServiceDB implements PlanningRemoteService {
 
 	@Override
 	public Calendar getDateFin() {
+		if(fin == null){
+			fin = Calendar.getInstance();
+			fin.add(Calendar.DAY_OF_YEAR, 7);
+		}
 		return this.fin;
 	}
 
@@ -103,6 +111,12 @@ public class PlanningServiceDB implements PlanningRemoteService {
 
 	@Override
 	public Medecin getMedecin() {
+		if(medecin == null)
+			try {
+				medecin = this.rechercherMedecins().get(0);
+			} catch (GestionCabinetException e) {
+				e.printStackTrace();
+			}
 		return this.medecin;
 	}
 
@@ -114,7 +128,11 @@ public class PlanningServiceDB implements PlanningRemoteService {
 
 	@Override
 	public List<Consultation> listerRdv() {
-		return null;
+		Query query = entityManager.createNamedQuery(ConsultationDB.RECHERCHER_CONSULTATIONS);
+		query.setParameter(1, debut);
+		query.setParameter(2, fin);
+		List<Consultation> lst = query.getResultList();
+		return lst;
 	}
 
 	@Override
@@ -134,6 +152,7 @@ public class PlanningServiceDB implements PlanningRemoteService {
 
 	@Override
 	public Consultation enregistrerRdv() throws GestionCabinetException {
+		rdvCourant.setMedecin(getMedecin());
 		this.consultationService.setConsultation(this.getRdvCourant());
 		return this.consultationService.enregistrer();
 	}

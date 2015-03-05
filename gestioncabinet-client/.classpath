@@ -9,5 +9,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/gestioncabinet-coreM"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/gestioncabinet-coreDB"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

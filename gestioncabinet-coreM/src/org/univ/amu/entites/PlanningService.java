@@ -39,12 +39,12 @@ public class PlanningService implements PlanningRemoteService{
 	private void init(){
 		
 	  user = new UtilisateurM();
-	  user.setNom("Bak");
-	  user.setPrenom("BakBak");
+	  user.setNom("Jean-Guy");
+	  user.setPrenom("Delatour");
 	  
 	  doc= new MedecinM();
-	  doc.setNom("Bik");
-	  doc.setPrenom("BikBik");
+	  doc.setNom("Chopin");
+	  doc.setPrenom("Jacques");
 	  
 	  dateDebut = Calendar.getInstance();
 	  dateDebut.roll(Calendar.DAY_OF_MONTH,-5);

@@ -14,7 +14,6 @@ import javax.persistence.TemporalType;
 import miage.gestioncabinet.api.Patient;
 
 @Entity
-@Table (name="t_personne") 
 @DiscriminatorValue("patient")
 @NamedQueries({
 	@NamedQuery(name=PatientDB.RECHERCHER_PATIENT, query="select p from PatientDB p where p.nom LIKE :nom OR p.prenom LIKE :prenom OR p.dateNaissance = :dateNaissance")

@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import miage.gestioncabinet.api.Produit;
@@ -26,7 +27,8 @@ public class TraitementDB implements Traitement {
 	
 	@Id
 	@Column(name="c_id")
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@SequenceGenerator(name="idTraitementGenerator",sequenceName="t_traitement_c_id_seq",initialValue=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="idTraitementGenerator")
 	private Long id;
 	
 	@Column(name="c_posologie")

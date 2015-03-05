@@ -3,12 +3,14 @@ package org.univ.amu.entites;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import miage.gestioncabinet.api.Personne;
@@ -18,7 +20,7 @@ import miage.gestioncabinet.api.Personne;
  * @author cregis
  *
  */
-@MappedSuperclass
+@Entity
 @Table(name="t_personne")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="c_discriminator",discriminatorType=DiscriminatorType.STRING)
@@ -31,7 +33,8 @@ public abstract class PersonneDB implements Personne {
 	
 	@Column(name="c_id")
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@SequenceGenerator(name="idPersonneGenerator",sequenceName="t_personne_c_id_seq",initialValue=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="idPersonneGenerator")
 	private Long id;
 	
 	@Column(name="c_nom")

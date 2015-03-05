@@ -10,11 +10,14 @@ import java.util.List;
 import java.util.Set;
 
 import javax.ejb.EJB;
+import javax.ejb.LocalBean;
 import javax.ejb.Remote;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import org.univ.amu.PrescriptionService;
 
 import miage.gestioncabinet.api.Consultation;
@@ -29,8 +32,8 @@ import fr.vidal.webservices.interactionservice.ArrayOfInt;
  * @author Moe1
  *
  */
-@Singleton
-@Startup
+@Stateful
+@LocalBean
 @Remote(ConsultationRemoteService.class)
 public class ConsultationServiceDB implements ConsultationRemoteService {
 
@@ -38,7 +41,7 @@ public class ConsultationServiceDB implements ConsultationRemoteService {
 	private EntityManager entityManager;
 	
 	@EJB
-	private PrescriptionService prescriptionService;
+	private PrescriptionServiceDB prescriptionService;
 
 	private Consultation consultation;
 
@@ -85,35 +88,8 @@ public class ConsultationServiceDB implements ConsultationRemoteService {
 		try{
 			this.getConsultation().getInteractions().clear();
 			Set<Produit> prodSet = new HashSet<Produit>();
-			for(Traitement traitement : this.getConsultation().getPrescription()){
+			for(Traitement traitement : this.getConsultation().getPrescription())
 				prodSet.add(traitement.getProduit());
-			}
-			/**for(Traitement traitement : this.getConsultation().getPrescription()){
-				Produit produit = traitement.getProduit();
-				if(produit instanceof ProduitDB){
-					ProduitDB produitDB = (ProduitDB) produit;
-					ints.getInt().add(produitDB.getVidal_id());
-				}
-			}
-			InteractionResult vidalInteractions = this.interactionService.getInteractionCouplesForProductIds(ints, InteractionSeverityType.CONTRAINDICATIONS);
-			for(InteractionCouple vidalInteraction : vidalInteractions.getInteractionCoupleList().getInteractionCouple()){
-				Interaction interaction = new InteractionDB();
-				Produit produitA = null;
-				Produit produitB = null;
-				Iterator<Traitement> itTraitement = this.getConsultation().getPrescription().iterator();
-				while(itTraitement.hasNext() || (produitA != null && produitB != null)){
-					Produit produit = itTraitement.next().getProduit();
-					if(produit.getCis().equals(vidalInteraction.getProductA().getCis())){
-						produitA = produit;
-					}else if(produit.getCis().equals(vidalInteraction.getProductB().getCis())){
-						produitB = produit;
-					}
-				}
-				interaction.setProduitA(produitA);
-				interaction.setProduitB(produitB);
-				interaction.setSeverite(vidalInteraction.getSeverity().value());
-				this.getConsultation().getInteractions().add(interaction);
-			}**/
 			List<Interaction> interactions = prescriptionService.findInteractions(new ArrayList<Produit>(prodSet));
 			this.entityManager.persist(this.getConsultation());
 		}catch(Exception e){
@@ -125,7 +101,10 @@ public class ConsultationServiceDB implements ConsultationRemoteService {
 	@Override
 	public Consultation enregistrer() throws GestionCabinetException {
 		try{
-			this.entityManager.persist(this.getConsultation());
+			if(((ConsultationDB)consultation).getId() == null)
+				this.entityManager.persist(this.getConsultation());
+			else
+				consultation = this.entityManager.merge(this.consultation);
 		}catch(Exception e){
 			e.printStackTrace();
 			System.err.println(this + " n'a pas réussi à enregistrer " + this.getConsultation());
